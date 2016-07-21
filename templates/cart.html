@@ -13,13 +13,13 @@
         </tr>
         </thead>
         <tbody>
-            {% for melon in my_cart %}
+            {% for melon_id in my_cart %}
 
         <tr>
-            <td>{{ melon.common_name() }} </td>
+            <td>{{ melon_id.common_name }} </td>
             <td>1</td>
-            <td>{{ melon.price_str() }}</td>
-            <td>{{ melon.price_str() }}</td>
+<!--             <td>{{ melon.price_str() }}</td>
+            <td>{{ melon.price_str() }}</td> -->
         </tr>
             {% endfor %}
         </tbody>

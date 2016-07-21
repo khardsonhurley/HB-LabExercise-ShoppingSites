@@ -69,7 +69,18 @@ def shopping_cart():
     #   - keep track of the total amt of the entire order
     # - hand to the template the total order cost and the list of melon types
 
-    return render_template("cart.html")
+    session["cart"] = session.get("cart",[])
+
+    melon_cart_dict = {}
+    #Iterating over the list of id's in our cart. 
+    for melon_id in session["cart"]:
+        #Calling function get_by_id to get melon object associated with id. 
+        melon_object = melons.get_by_id(melon_id)
+        #adding a key to the dictionary such that the key is the id, and
+        #value is the returned melon object.
+        melon_cart_dict[melon_id] = melon_cart_dict.get(melon_id, melon_object)
+
+    return render_template("cart.html", my_cart=melon_cart_dict)
 
 
 @app.route("/add_to_cart/<int:id>")
@@ -80,17 +91,14 @@ def add_to_cart(id):
     page and display a confirmation message: 'Successfully added to cart'.
     """
 
-    # TODO: Finish shopping cart functionality
+    #Sets the value for "cart" to whatever is in the list, if not there, 
+    #set to default empty list. 
+    session["cart"] = session.get("cart",[])
+    #session["cart"] references the list, so this means you can append directly
+    # to the list by accessing session["cart"].
+    session["cart"].append(id)
 
-    # The logic here should be something like:
-    #
-    # - add the id of the melon they bought to the cart in the session
-
-    my_cart_list = session.get("cart",[])
-
-    my_cart_list.append(id)
-
-    return render_template("cart.html", my_cart=my_cart_list)
+    return redirect("/cart")
 
 @app.route("/login", methods=["GET"])
 def show_login():
