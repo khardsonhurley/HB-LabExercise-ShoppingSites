@@ -79,6 +79,9 @@ def shopping_cart():
         #adding a key to the dictionary such that the key is the id, and
         #value is the returned melon object.
         melon_cart_dict[melon_id] = melon_cart_dict.get(melon_id, melon_object)
+        print melon_object.quantity
+        melon_object.quantity += 1
+        print melon_object.quantity
 
     return render_template("cart.html", my_cart=melon_cart_dict)
 
